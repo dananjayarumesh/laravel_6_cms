@@ -4,7 +4,7 @@ namespace Modules\Log\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class LogDatabaseSeeder extends Seeder
 {
     /**
@@ -15,6 +15,13 @@ class LogDatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
+
+
+        DB::table('log_types')->insert([
+            'id'=>1,
+            'name' => 'LOGGED IN'
+        ]);
+
 
         // $this->call("OthersTableSeeder");
     }

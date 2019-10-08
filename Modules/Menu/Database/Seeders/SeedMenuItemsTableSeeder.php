@@ -4,7 +4,7 @@ namespace Modules\Menu\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class SeedMenuItemsTableSeeder extends Seeder
 {
     /**
@@ -39,21 +39,23 @@ class SeedMenuItemsTableSeeder extends Seeder
 
         ];
 
+        foreach ($rows as $key => $row) {
+            DB::table('menus')->insert([
+                'title' => $row[0],
+                'menu_icon_id' => $row[1],
+                'url' => $row[2],
+                'parent_id' => $row[3],
+                'level' => $row[4],
+                'priority' => $row[5],
+                'permissions' => $row[6],
+                'super_admin' => $row[7],
+                'status' => $row[8]
+            ]);
+        }
+
     }
 
-    foreach ($rows as $key => $row) {
-        DB::table('menus')->insert([
-            'title' => $row[0],
-            'menu_icon_id' => $row[1],
-            'url' => $row[2],
-            'parent_id' => $row[3],
-            'level' => $row[4],
-            'priority' => $row[5],
-            'permissions' => $row[6],
-            'super_admin' => $row[7],
-            'status' => $row[8],
-        ]);
-    }
+
 
 }
 
