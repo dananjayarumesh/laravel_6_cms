@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('admin/login', 'AuthController@login')->name('admin.login');
-
-Route::prefix('admin/user')->middleware('web','auth:admin')->group(function() {
-    Route::get('/', 'UserController@index');
+Route::prefix('dashboard')->group(function() {
+    Route::get('/', 'DashboardController@index');
 });
