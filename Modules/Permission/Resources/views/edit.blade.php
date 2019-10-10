@@ -1,6 +1,6 @@
 <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Edit User</h4>
+          <h4 class="modal-title">Permission Edit</h4>
         </div>
         <form action="{{route('permission.update',['id'=>$permission->id])}}" method="post" onsubmit="event.preventDefault(); crud.directSubmit(this);">
             <div class="modal-body">

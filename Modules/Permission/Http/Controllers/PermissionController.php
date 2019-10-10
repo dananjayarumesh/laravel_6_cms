@@ -61,10 +61,10 @@ class PermissionController extends Controller
 
         if($request->has('enable')){
             $user->givePermissionTo($request->permission);
-             return response()->json(['msg'=>'Permission enabled successfully!'], 200);
+            return response()->json(['msg'=>'Permission enabled successfully!'], 200);
         }else{
             $user->revokePermissionTo($request->permission);
-             return response()->json(['msg'=>'Permission disabled successfully!'], 200);
+            return response()->json(['msg'=>'Permission disabled successfully!'], 200);
         }
     }
 
@@ -74,10 +74,10 @@ class PermissionController extends Controller
 
         if($request->has('enable')){
             $role->givePermissionTo($request->permission);
-             return response()->json(['msg'=>'Permission enabled successfully!'], 200);
+            return response()->json(['msg'=>'Permission enabled successfully!'], 200);
         }else{
             $role->revokePermissionTo($request->permission);
-             return response()->json(['msg'=>'Permission disabled successfully!'], 200);
+            return response()->json(['msg'=>'Permission disabled successfully!'], 200);
         }
     }
 
@@ -124,14 +124,10 @@ class PermissionController extends Controller
         ->addIndexColumn()
         ->addColumn('action', function ($row) {
             $buttons = '';
-            if(Auth::user()->checkPermission('permission.edit')){
-                $buttons .= ' <button type="button" class="btn btn-default btn-xs" data-id="'.$row->id.'" onclick="crud.editClick(this)">Edit</button>'; 
-            }
-            if(Auth::user()->checkPermission('permission.delete')){
-              $buttons .= ' <button type="button" class="btn btn-default btn-xs" data-id="'.$row->id.'" onclick="deleteClick(this)">Delete</button>'; 
-          }
-          return $buttons;
-      })
+            $buttons .= ' <button type="button" class="btn btn-default btn-xs" data-id="'.$row->id.'" onclick="crud.editClick(this)">Edit</button>'; 
+            $buttons .= ' <button type="button" class="btn btn-default btn-xs" data-id="'.$row->id.'" onclick="deleteClick(this)">Delete</button>'; 
+            return $buttons;
+        })
         ->rawColumns(['action'])
         ->make(true); 
     }
@@ -154,7 +150,7 @@ class PermissionController extends Controller
 
             $output .= '<form action="'.url('permission/user-toggle',['id'=>$user->id]).'" method="post">
             <input value="1" type="checkbox" name="enable" class="flat-red" '.$has_permission.' onchange="crud.directSubmit(this.form)">
-             <input value="'.$row->name.'" type="hidden" name="permission">
+            <input value="'.$row->name.'" type="hidden" name="permission">
             </form>';
 
             return $output;
@@ -185,7 +181,7 @@ class PermissionController extends Controller
             </form>';
 
             return $output;
-      })
+        })
         ->rawColumns(['action'])
         ->make(true); 
     }

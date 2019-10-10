@@ -1,9 +1,9 @@
-@extends('layouts.master')
+@extends('dashboard::layouts.master')
 
 @push('style')
 <!-- DataTables -->
-<link rel="stylesheet" href="{{asset('assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-<link rel="stylesheet" href="{{asset('assets/ladda/css/ladda-themeless.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/admin/ladda/css/ladda-themeless.min.css')}}">
 <style>
 	.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
 	.sortable li { margin: 0 3px 3px 3px; padding: 0.8em; padding-left: 1.5em; font-size: 12px; }
@@ -98,7 +98,7 @@
 	<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-@include('includes.form-modal')
+@include('dashboard::includes.form-modal')
 @endsection
 
 @push('script')
@@ -123,13 +123,13 @@
 
 
 <!-- DataTables -->
-<script src="{{asset('assets/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('assets/ladda/js/spin.min.js')}}"></script>
-<script src="{{asset('assets/ladda/js/ladda.min.js')}}"></script>
-<script src="{{asset('assets/js/crud.js')}}"></script>
-<script src="{{asset('assets/js/form-submit.js')}}"></script>
-<script src="{{asset('assets/js/menu.js')}}"></script>
+<script src="{{asset('assets/admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/admin/ladda/js/spin.min.js')}}"></script>
+<script src="{{asset('assets/admin/ladda/js/ladda.min.js')}}"></script>
+<script src="{{asset('assets/admin/js/crud.js')}}"></script>
+<script src="{{asset('assets/admin/js/form-submit.js')}}"></script>
+<script src="{{asset('assets/admin/js/menu.js')}}"></script>
 
 
 <script type="text/javascript">

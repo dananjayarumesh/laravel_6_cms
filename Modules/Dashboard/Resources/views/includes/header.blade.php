@@ -145,13 +145,13 @@
           </li> --}}
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-           <img src="{{asset('assets/img/user.png')}}" class="user-image" alt="User Image">
+           <img src="{{asset('assets/admin/img/user.png')}}" class="user-image" alt="User Image">
               <span class="hidden-xs">{{ucfirst(Auth::user()->name)}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{asset('assets/img/user.png')}}" class="img-circle" alt="User Image">
+                <img src="{{asset('assets/admin/img/user.png')}}" class="img-circle" alt="User Image">
 
                 <p>
                     @foreach (Auth::guard('admin')->user()->getRoleNames() as $role)
@@ -164,12 +164,12 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  {{-- <a href="{{route('profile.index')}}" class="btn btn-default btn-flat">Profile</a> --}}
+                  <a href="{{route('profile.index')}}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{ route('logout') }}" class="btn btn-default btn-flat" onclick="event.preventDefault();
+                  <a href="{{ route('admin.logout') }}" class="btn btn-default btn-flat" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Sign out</a>
-                                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                      <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
                 </div>

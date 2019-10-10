@@ -1,4 +1,4 @@
-<form action="{{route('menu.update',['id'=>$menu->id])}}" method="post" onsubmit="event.preventDefault(); crud.directSubmit(this);">
+<form action="{{route('menu.update',['menu'=>$menu->id])}}" method="post" onsubmit="event.preventDefault(); crud.directSubmit(this);">
   <input name="_method" type="hidden" value="PUT">
   <div class="modal-body">
     <div class="form-group">
