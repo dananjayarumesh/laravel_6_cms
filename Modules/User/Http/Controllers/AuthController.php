@@ -5,7 +5,9 @@ namespace Modules\User\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
+use Illuminate\Validation\ValidationException;
+use Auth;
+use Session;
 class AuthController extends Controller
 {
 
@@ -17,18 +19,22 @@ class AuthController extends Controller
 
     public function submitLogin(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'email'=> 'required|email',
             'password'=>'required|min:6'
         ]);
 
         if (Auth::guard('admin')->attempt(['email'=>$request->email,'password'=>$request->password],$request->remember)) {
-            $intended_url = Session::get('url.intended', route('student.profile'));
-            Session::forget('url.intended');
-              return response()->json(['url'=>$intended_url], 200);
-            // return redirect()->intended(route('student.profile'));
+            // $intended_url = Session::get('url.intended', route('admin.dashboard'));
+            // Session::forget('url.intended');
+            // return response()->json(['url'=>$intended_url], 200);
+            return redirect()->intended(route('admin.dashboard'));
         }
-         return response()->json(['msg'=>'Invalid credentials'], 422);
+
+        $error = ValidationException::withMessages([
+           'email' => ['Credentials does not match'],
+       ]);
+        throw $error;
     }
     
     /**

@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('dashboard')->group(function() {
-    Route::get('/', 'DashboardController@index');
+// Route::resource('booktype','BookTypeController');
+
+Route::prefix('admin')->middleware('web','auth:admin')->group(function() {
+    Route::get('/', 'DashboardController@index')->name('admin.dashboard');
 });

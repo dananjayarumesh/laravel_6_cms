@@ -10,7 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => ['web','auth:admin']], function()
+{
+	Route::resource('admin/log','LogController');
 
-Route::prefix('log')->group(function() {
-    Route::get('/', 'LogController@index');
+	Route::prefix('admin/log')->group(function() {
+		Route::post('/data', 'LogController@data');
+	});
+
 });

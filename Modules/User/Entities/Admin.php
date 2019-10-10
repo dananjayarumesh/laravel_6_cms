@@ -4,10 +4,10 @@ namespace Modules\User\Entities;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Spatie\Permission\Traits\HasRoles;
 class Admin extends Authenticatable
 {
-	use Notifiable;
+	use Notifiable,HasRoles;
 
 	 /**
      * The attributes that are mass assignable.
@@ -27,5 +27,5 @@ class Admin extends Authenticatable
     	'password', 'remember_token',
     ];
 
-    protected $fillable = [];
+    // protected $fillable = [];
 }

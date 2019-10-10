@@ -13,7 +13,7 @@
  <div class="login-box-body">
   <p class="login-box-msg">Sign in to start your session</p>
 
-  <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+  <form method="POST" action="{{ route('admin.login.submit') }}" aria-label="{{ __('Login') }}">
     {{ csrf_field() }}
 
     <div class="form-group has-feedback">

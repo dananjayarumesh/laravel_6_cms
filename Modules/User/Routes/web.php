@@ -10,9 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::prefix('admin')->middleware('web','guest:admin')->group(function() {
 
-Route::get('admin/login', 'AuthController@login')->name('admin.login');
+Route::get('login', 'AuthController@login')->name('admin.login');
+Route::post('login', 'AuthController@submitLogin')->name('admin.login.submit');
+});
 
-Route::prefix('admin/user')->middleware('web','auth:admin')->group(function() {
-    Route::get('/', 'UserController@index');
+Route::prefix('admin')->middleware('web','auth:admin')->group(function() {
+    Route::get('user', 'UserController@index');
 });

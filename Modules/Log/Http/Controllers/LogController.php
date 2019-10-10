@@ -5,75 +5,57 @@ namespace Modules\Log\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Log\Entities\Log;
+use Modules\Log\Entities\LogType;
+use App\User;
+use DataTables;
 
 class LogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function index()
+
+   public function index(Request $request)
     {
-        return view('log::index');
+        $logs = Log::orderBy('id', 'desc')
+                ->where(function ($q) use ($request){
+                    if($request->log_type){
+                        $q->where('log_type',$request->log_type);
+                    }
+                    if($request->user){
+                        $q->where('user_id',$request->user);
+                    }
+                })
+                ->paginate(100)->appends(request()->query());
+        $log_types = LogType::all();
+        $users = User::all();
+        return view('log::index',compact('logs','log_types','users','request'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('log::create');
-    }
+    public function data(Request $request){
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $data = Log::orderBy('id', 'desc')
+                ->where(function($q) use ($request){
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('log::show');
-    }
+                    if($request){
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('log::edit');
-    }
+                    }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+                })
+                ->get();
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        return DataTables::make($data)
+        ->addIndexColumn()
+        ->editColumn('created_by', function ($row) {
+            return ($row->user_id)?$row->createdBy->name:'';
+        })
+        ->editColumn('created_at', function ($row) {
+            return date(DATETIMEFORMAT, strtotime($row->created_at));
+        })
+        ->editColumn('description', function ($row) {
+            if($row->logtypes){
+                return $row->logtypes->name;
+            }
+        })
+        ->rawColumns(['created_by','action','created_at','description'])
+        ->make(true); 
     }
 }
