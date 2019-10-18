@@ -7,12 +7,26 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Permission\Http\Requests\PermissionRequest;
 use Spatie\Permission\Models\Role;
-use App\User;
+use Modules\User\Entities\Admin;
 use Spatie\Permission\Models\Permission;
 use DataTables;
 use Auth;
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('check_permission:SuperAdminOnly', ['only' => ['index','store','update','destroy']]);
+
+        $this->middleware('check_permission:permission.user.list', ['only' => ['userIndex']]);
+        $this->middleware('check_permission:permission.role.list', ['only' => ['roleIndex']]);
+
+        $this->middleware('check_permission:permission.user.create',   ['only' => ['userPermissionToggle']]);
+        $this->middleware('check_permission:permission.role.create',   ['only' => ['rolePermissionToggle']]);
+
+        $this->middleware('check_permission:permission.user.edit',   ['only' => ['userPermissionToggle']]);
+        $this->middleware('check_permission:permission.role.edit',   ['only' => ['rolePermissionToggle']]);
+
+    }
 
     /**
      * Display a listing of the resource.
@@ -25,7 +39,7 @@ class PermissionController extends Controller
 
     public function userIndex()
     {
-        $users = User::orderBy('id', 'desc')->where('id','<>',1)->get();
+        $users = Admin::orderBy('id', 'desc')->where('id','<>',1)->get();
         return view('permission::user-index',compact('users'));
     }
 
@@ -51,13 +65,13 @@ class PermissionController extends Controller
      */
     public function store(PermissionRequest $request)
     {
-        $permission = Permission::create(['name' => $request->name,'created_by' => Auth::user()->id]);
+        $permission = Permission::create(['name' => $request->name,'created_by' => Auth::guard('admin')->user()->id]);
         return response()->json(['msg'=>'Permission Added Successfully!'], 200);
     }
 
     public function userPermissionToggle(Request $request,$id)
     {
-        $user = User::findOrFail($id);
+        $user = Admin::findOrFail($id);
 
         if($request->has('enable')){
             $user->givePermissionTo($request->permission);
@@ -112,8 +126,6 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         $permission = Permission::findOrFail($id);
-
-        
     }
 
     public function data()
@@ -134,7 +146,7 @@ class PermissionController extends Controller
 
     public function userData(Request $request)
     {
-        $user = User::find($request->user);
+        $user = Admin::find($request->user);
 
         if($user){
             $data = Permission::orderBy('name', 'asc')->get();

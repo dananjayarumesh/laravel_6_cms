@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use Auth;
 class Handler extends ExceptionHandler
 {
     /**
@@ -72,6 +73,45 @@ class Handler extends ExceptionHandler
 
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof TokenMismatchException) {
+            return redirect('/');
+        }
+
+        if ($this->isHttpException($exception)) {
+
+            switch ($exception->getStatusCode()) {
+
+            // not authorized
+                case '403':
+                if(Auth::guard('admin')->check()){
+                    return \Response::view('dashboard::errors.403',array(),403);
+                }
+                break;
+
+            // not found
+                case '404':
+                
+                // dd('sss');
+                if(Auth::guard('admin')->check()){
+                   return \Response::view('dashboard::errors.404',array(),404);
+                }
+               break;
+
+            // internal error
+               case '500':
+                if(Auth::guard('admin')->check()){
+                   return \Response::view('dashboard::errors.500',array(),500);
+                }
+               break;
+
+               default:
+               if(Auth::guard('admin')->check()){
+                    return \Response::view('dashboard::errors.500',array(),500);
+                }
+               break;
+           }
+       }
+
         return parent::render($request, $exception);
     }
 }

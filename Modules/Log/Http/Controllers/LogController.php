@@ -12,7 +12,10 @@ use DataTables;
 
 class LogController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('check_permission:user.list', ['only' => ['index']]);
+    }
    public function index(Request $request)
     {
         $logs = Log::orderBy('id', 'desc')

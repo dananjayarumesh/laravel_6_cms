@@ -55,7 +55,7 @@
 <script src="{{asset('assets/admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/admin/plugins/jquery.multi-select/jquery.multi-select.js')}}"></script>
-<script type="text/javascript" src="{{asset('assets/ladda/js/spin.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/admin/ladda/js/spin.min.js')}}"></script>
 <script src="{{asset('assets/admin/ladda/js/ladda.min.js')}}"></script>
 <script src="{{asset('assets/admin/js/crud.js')}}"></script>
 <script src="{{asset('assets/admin/js/form-submit.js')}}"></script>

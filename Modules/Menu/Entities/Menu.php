@@ -34,7 +34,6 @@ class Menu extends Model
 			return false;
 		}
 
-// dd('dsd');
 		if(($user->id == 1) || (trim($permissions) == "" || trim($permissions) == NULL) ){
 			return true;
 		}else{
@@ -56,12 +55,6 @@ class Menu extends Model
 
 		foreach ($l1_items as $key => $l1_item) {
 
-			// if($l1_item->super_admin == 1){
-			// 	dd(1);
-			// }
-
-			// var_dump($l1_item->super_admin);
-
 			if(!$this->checkPermission($l1_item->permissions,$l1_item->super_admin)){
 				continue;
 			}
@@ -76,6 +69,7 @@ class Menu extends Model
 				if(!$this->checkPermission($l2_item->permissions,$l2_item->super_admin)){
 					continue;
 				}
+
 
 				$l3_items = $this->whereParentId($l2_item->id)->whereStatus(1)->orderBy('priority')->get();
 

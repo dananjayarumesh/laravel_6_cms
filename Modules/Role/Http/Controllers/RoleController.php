@@ -12,6 +12,13 @@ use DataTables;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('check_permission:user.list', ['only' => ['index']]);
+        // $this->middleware('check_permission:user.create',   ['only' => ['create','store']]);
+        // $this->middleware('check_permission:user.edit',   ['only' => ['edit', 'update']]);
+        // $this->middleware('check_permission:user.delete',   ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      * @return Response

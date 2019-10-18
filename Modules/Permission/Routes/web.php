@@ -13,9 +13,9 @@
 Route::group(['middleware' => ['web','auth:admin']], function()
 {
 	Route::resource('admin/permission','PermissionController');
+	Route::get('admin/user-permission', 'PermissionController@userIndex');
+	Route::get('admin/role-permission', 'PermissionController@roleIndex');
 	Route::prefix('admin/permission')->group(function() {
-		Route::get('/user-permission', 'PermissionController@userIndex');
-		Route::get('/role-permission', 'PermissionController@roleIndex');
 		Route::post('/data', 'PermissionController@data');
 		Route::post('/userData', 'PermissionController@userData');
 		Route::post('/roleData', 'PermissionController@roleData');

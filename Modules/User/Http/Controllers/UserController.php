@@ -9,12 +9,20 @@ use Modules\Role\Http\Requests\RoleRequest;
 use Modules\User\Http\Requests\UserRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\User;
+use Modules\User\Entities\Admin;
 use DataTables;
 
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('check_permission:user.list', ['only' => ['index']]);
+        $this->middleware('check_permission:user.create',   ['only' => ['create','store']]);
+        $this->middleware('check_permission:user.edit',   ['only' => ['edit', 'update']]);
+        $this->middleware('check_permission:user.delete',   ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -44,7 +52,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         
-        $user = User::create([
+        $user = Admin::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -78,7 +86,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = Admin::find($id);
         $roles = Role::all();
 
         $roleName = $user->getRoleNames()->toArray();
@@ -93,7 +101,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request,$id)
     {
-        $user = User::find($id);
+        $user = Admin::find($id);
 
         $user->name = $request->name;
 
@@ -132,7 +140,7 @@ class UserController extends Controller
 
     public function data()
     {
-        $data = User::orderBy('id', 'desc')->where('id','<>',1)->get();
+        $data = Admin::orderBy('id', 'desc')->where('id','<>',1)->get();
 
         return DataTables::make($data)
         ->addIndexColumn()

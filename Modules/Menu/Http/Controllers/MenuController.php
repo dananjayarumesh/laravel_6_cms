@@ -13,6 +13,10 @@ use DB;
 
 class MenuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('check_permission:SuperAdminOnly');
+    }
     /**
      * Display a listing of the resource.
      * @return Response
@@ -68,16 +72,16 @@ class MenuController extends Controller
 
         $menu->url = $request->url ? $request->url : '#';
         if($request->parent_level_2){
-         $menu->parent_id = $request->parent_level_2;
-         $menu->level = 3;
-     }else if($request->parent_level_1){
-         $menu->parent_id = $request->parent_level_1;
-         $menu->level = 2;
-     }else{
+           $menu->parent_id = $request->parent_level_2;
+           $menu->level = 3;
+       }else if($request->parent_level_1){
+           $menu->parent_id = $request->parent_level_1;
+           $menu->level = 2;
+       }else{
         $menu->level = 1;
     }
 
-     $menu->save();
+    $menu->save();
     return response()->json(['msg'=>'Menu Added Successfully!'], 200);
 }
 
@@ -127,8 +131,8 @@ class MenuController extends Controller
 
     public function updatePriority(Request $request)
     {
-     DB::beginTransaction();
-     try {
+       DB::beginTransaction();
+       try {
         if(count($request->level1_prority) > 0){
             foreach ($request->level1_prority as $key => $menu_id) {
                 Menu::find($menu_id)->update(['priority'=>(int)$key+1]);

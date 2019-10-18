@@ -38,7 +38,7 @@
 			<div class="box-body">
 				<div class="row">
 					<div class="col-md-6">
-						<form method="post" id="menuProrityForm" action="{{url('menu/priority/update')}}" onsubmit="event.preventDefault(); crud.directSubmit(this);">
+						<form method="post" id="menuProrityForm" action="{{url('admin/menu/priority/update')}}" onsubmit="event.preventDefault(); crud.directSubmit(this);">
 							 <input name="_method" type="hidden" value="PUT">
 						<div class="row">
 							<div class="col-md-4">
