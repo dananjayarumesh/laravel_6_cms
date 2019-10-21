@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
+use Modules\Log\Events\ActivityLog;
 use Auth;
 use Session;
 class AuthController extends Controller
@@ -25,9 +26,10 @@ class AuthController extends Controller
         ]);
 
         if (Auth::guard('admin')->attempt(['email'=>$request->email,'password'=>$request->password],$request->remember)) {
-            // $intended_url = Session::get('url.intended', route('admin.dashboard'));
-            // Session::forget('url.intended');
-            // return response()->json(['url'=>$intended_url], 200);
+
+            //submit activity log
+            event(new ActivityLog(1));
+
             return redirect()->intended(route('admin.dashboard'));
         }
 

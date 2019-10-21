@@ -5,7 +5,8 @@
     "keywords": [],
     "order": 0,
     "providers": [
-        "Modules\\Log\\Providers\\LogServiceProvider"
+        "Modules\\Log\\Providers\\LogServiceProvider",
+        "Modules\\Log\\Providers\\EventServiceProvider"
     ],
     "aliases": {},
     "files": [],
